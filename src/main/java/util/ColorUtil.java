@@ -2,9 +2,6 @@ package util;
 
 import java.awt.*;
 
-/**
- * 同样直接copy过来的。颜色这块嗷。。。实在没有深究的必要
- */
 public class ColorUtil {
     public static Color blueColor = Color.decode("#3399FF");
     public static Color grayColor = Color.decode("#999999");

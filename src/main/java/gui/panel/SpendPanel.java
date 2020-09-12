@@ -9,15 +9,7 @@ import static util.GuiUtil.showPanel;
 
 import javax.swing.*;
 import java.awt.*;
-
-/**
- * 核心模块
- * 继承workingPanel，work区域放在中间，点击其他按钮，work区域发生变化
- * 首先把整体是一个BorderLayerout
- * 中间是一个Panel，采用的BorderLayerout.CENTER
- * 下面也是一个Panel，采用的BorderLayerout.SOUTH
- */
-//
+//继承workingPanel，因为要把work区域放在中间，点击其他按钮，work区域发生变化
 public class SpendPanel extends WorkingPanel{
     public static SpendPanel instance = new SpendPanel();
     JLabel lMonthSpend = new JLabel("本月消费");
