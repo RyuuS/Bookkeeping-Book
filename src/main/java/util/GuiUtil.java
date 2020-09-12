@@ -5,6 +5,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 工具包，里边主要包含放置图像和显示模块的功能
+ * @setImageIcon主要在MainPanel里使用
+ * @showPanel用于加载模块
+ */
 public class GuiUtil {
     private static String imageFolder = "img";
     //放置图像
@@ -31,12 +36,11 @@ public class GuiUtil {
         }
         return true;
     }
-    //showpanel用于测试？？
     public static void showPanel(JPanel p,double strechRate) {
         //GuiUtil.useLNF();
         JFrame f = new JFrame();
         f.setSize(500, 500);
-        //设置窗口相对于指定组件的位置.为 null，则此窗口将置于屏幕的中央
+        //设置窗口相对于指定组件的位置为 null，则此窗口将置于屏幕的中央
         f.setLocationRelativeTo(null);
         CenterPanel cp = new CenterPanel(strechRate);
         //把cp设置为内容面板
@@ -47,13 +51,5 @@ public class GuiUtil {
     }
     public static void showPanel(JPanel p) {
         showPanel(p,0.85);
-    }
-    public static void useLNF() {
-        try {
-            javax.swing.UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 }

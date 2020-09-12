@@ -1,12 +1,12 @@
 package gui.frame;
 
 import javax.swing.*;
-
 import gui.panel.MainPanel;
-import util.GuiUtil;
-import gui.panel.MainPanel;
-import java.awt.*;
 
+/**
+ * 程序入口
+ * @setContentPane直接将MainPanel替换了JFrame界面为初始界面
+ */
 public class Bookkeeping {
     public static void main(String[] args) {
         JFrame jf = new JFrame();

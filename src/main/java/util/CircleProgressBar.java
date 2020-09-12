@@ -15,6 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
+/**
+ * 绘制环形进度条，代码直接copy来的(swing这块都是坑，而且学习的意义不是很大，所以直接拿来用就好)
+ */
 public class CircleProgressBar extends JPanel {
 
     private int minimumProgress;
