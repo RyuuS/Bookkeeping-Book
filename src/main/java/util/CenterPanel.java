@@ -5,6 +5,11 @@ import gui.panel.WorkingPanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * 比较重要的一个类，继承JPanel，主要是用于working区域的显示
+ * @repaint重绘此组件。必须要有，虽然没有被调用？(删除之后working区域将变成空白)
+ * @show组件的更新，先用c存储并显示此次显示的组件，在下一次调用时将其删除??
+ */
 public class CenterPanel extends JPanel {
     private  double rate;//拉伸比例
     private  boolean strech;//是否拉伸
