@@ -1,5 +1,4 @@
 package dao;
-import entity.Config;
 import util.DBUtil;
 
 import java.sql.Connection;
