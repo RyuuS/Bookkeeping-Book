@@ -8,7 +8,7 @@ package entity;
  */
 public class Config {
     public int id;
-    public String ket;
+    public String key;
     public String value;
     public int getId() {
         return id;
@@ -19,11 +19,11 @@ public class Config {
     }
 
     public String getKet() {
-        return ket;
+        return key;
     }
 
     public void setKet(String ket) {
-        this.ket = ket;
+        this.key = ket;
     }
 
     public String getValue() {

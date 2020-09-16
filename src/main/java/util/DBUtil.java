@@ -11,12 +11,12 @@ import java.sql.SQLException;
  */
 public class DBUtil {
     static Connection c = null;
-    private String ip = "192.168.1.134";
-    private String port = "3306";
-    private String dbName = "bookkeeping";
-    private String encode = "characterEncoding=UTF-8";
-    private String loginName = "root";
-    private String password = "root";
+    static String ip = "192.168.1.134";
+    static String port = "3306";
+    static String dbName = "bookkeeping";
+    static String encode = "characterEncoding=UTF-8";
+    static String loginName = "root";
+    static String password = "root";
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -24,7 +24,7 @@ public class DBUtil {
             e.printStackTrace();
         }
     }
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         //连接数据库
         //useSSL=false连接非本地数据库使用这个命令避免报错
         String url = String.format(
