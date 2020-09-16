@@ -70,7 +70,7 @@ public class Test3JDBC {
     public static void getID(String sql){
         try {
             Statement s = c.createStatement();
-            PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = c.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, "船长");
             ps.setFloat(2, 3130f);
             ps.setInt(3, 100);

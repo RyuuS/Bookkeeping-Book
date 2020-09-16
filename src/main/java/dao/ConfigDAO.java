@@ -8,20 +8,35 @@ import java.util.List;
 
 public class ConfigDAO implements DAO<Config>{
     public static void main(String[] args) {
-
+        Config config = new Config();
+        config.key = "123";
+        config.value = "456";
+        new ConfigDAO().add(config);
     }
-
     @Override
     public void add(Config config) {
-        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
-            String sql = "insert into config values(null " + config.key + config.value + ")";
-            s.execute(sql);
-            ResultSet rs = s.getGeneratedKeys();
+//        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+//            String sql = "insert into config values(null ," + config.key + ","+ config.value + ")";
+//            s.executeUpdate(sql);
+//            ResultSet rs = s.getGeneratedKeys();
+//            if(rs.next()){
+//                int id = rs.getInt(1);
+//                config.id = id;
+//            }
+//
+//        }
+        String sql = "insert into config values(null,?,?)";
+        try(Connection c = DBUtil.getConnection();
+            PreparedStatement ps = c.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS))
+            {
+            ps.setString(1,config.key);
+            ps.setString(2,config.value);
+            ps.execute();
+            //之前加入Statement.RETURN_GENERATED_KEYS。避免getGeneratedKeys()报错
+            ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
-                int id = rs.getInt(1);
-                config.id = id;
+                config.id = rs.getInt(1);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
