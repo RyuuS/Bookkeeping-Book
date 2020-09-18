@@ -9,9 +9,10 @@ import java.util.List;
 public class ConfigDAO implements DAO<Config>{
     public static void main(String[] args) {
         Config config = new Config();
-        config.key = "123";
-        config.value = "456";
-        new ConfigDAO().add(config);
+        config.id = 1;
+        config.key = "budget";
+        config.value = "100";
+        new ConfigDAO().update(config);
     }
     @Override
     public void add(Config config) {
@@ -41,14 +42,14 @@ public class ConfigDAO implements DAO<Config>{
             e.printStackTrace();
         }
     }
-
     @Override
     public void update(Config config) {
-        String sql = "update config set id= ?, value=? where key = ?";
+        //sql里的key是关键字，"key"列命名改为"key_"
+        String sql = "update config set key_= ?, value=? where id = ?";
         try (Connection c = DBUtil.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
-            ps.setInt(1,config.id);
-            ps.setString(2,config.key);
-            ps.setString(3,config.value);
+            ps.setString(1,config.key);
+            ps.setString(2,config.value);
+            ps.setInt(3,config.id);
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -110,5 +111,25 @@ public class ConfigDAO implements DAO<Config>{
             e.printStackTrace();
         }
         return null;
+    }
+    public Config getKey(String key){
+        //System.out.println(key);
+        Config config = null;
+        try(Connection c = DBUtil.getConnection();Statement s = c.createStatement()) {
+            //字符串搜索需要加引号
+            String sql = "select * from config where key_='" + key +"'";
+            s.execute(sql);
+            ResultSet rs = s.getResultSet();
+            while (rs.next()){
+                config = new Config();
+                config.id = rs.getInt("id");
+                config.key = rs.getString("key_");
+                System.out.println(config.key);
+                config.value = rs.getString("value");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return config;
     }
 }

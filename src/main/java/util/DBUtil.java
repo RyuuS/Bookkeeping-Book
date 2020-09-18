@@ -29,6 +29,7 @@ public class DBUtil {
         //useSSL=false连接非本地数据库使用这个命令避免报错
         String url = String.format(
                 "jdbc:mysql://%s:%s/%s?%s&useSSL=false",ip,port,dbName,encode);
-        return DriverManager.getConnection(url,loginName,password);
+        Connection c = DriverManager.getConnection(url,loginName,password);
+        return c;
     }
 }

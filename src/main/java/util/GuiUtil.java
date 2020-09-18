@@ -32,9 +32,9 @@ public class GuiUtil {
         if (text.length() == 0){
             JOptionPane.showMessageDialog(null,input + "不能为空");
             tf.grabFocus();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
     public static void showPanel(JPanel p,double strechRate) {
         //GuiUtil.useLNF();

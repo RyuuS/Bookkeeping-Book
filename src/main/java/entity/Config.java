@@ -18,12 +18,12 @@ public class Config {
         this.id = id;
     }
 
-    public String getKet() {
+    public String getKey() {
         return key;
     }
 
-    public void setKet(String ket) {
-        this.key = ket;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getValue() {

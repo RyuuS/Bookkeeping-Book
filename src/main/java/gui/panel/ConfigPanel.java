@@ -1,5 +1,7 @@
 package gui.panel;
 
+import gui.listener.ConfigListener;
+
 import javax.swing.*;
 import java.awt.*;
 import static util.GuiUtil.showPanel;
@@ -30,6 +32,7 @@ public class ConfigPanel extends WorkingPanel{
         south.add(b);
         add(north,BorderLayout.NORTH);
         add(south,BorderLayout.SOUTH);
+        addListener();
     }
 
     public ConfigPanel() {
@@ -47,6 +50,7 @@ public class ConfigPanel extends WorkingPanel{
 
     @Override
     public void addListener() {
-
+        ConfigListener listener = new ConfigListener();
+        b.addActionListener(listener);
     }
 }
