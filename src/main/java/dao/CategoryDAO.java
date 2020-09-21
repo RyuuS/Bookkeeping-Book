@@ -72,7 +72,7 @@ public class CategoryDAO implements DAO<Category> {
     public List<Category> list(int start, int count) {
         List<Category> categories = new ArrayList<>();
         Category category = null;
-        String sql = "select * from categories order by id desc limit ?,?";
+        String sql = "select * from category order by id desc limit ?,?";
         try(Connection c = DBUtil.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
             ps.setInt(1,start);
             ps.setInt(2,count);
@@ -93,5 +93,51 @@ public class CategoryDAO implements DAO<Category> {
         }
 
         return categories;
+    }
+    public Category getKey(String name){
+        Category category = null;
+        try(Connection c = DBUtil.getConnection();Statement s = c.createStatement()) {
+            String sql = "select * from category where name = " + name;
+            s.execute(sql);
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()){
+                category = new Category();
+                category.id = rs.getInt("id");
+                category.name = rs.getString("name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return category;
+    }
+    //消费次数
+    public static int getCount(int id){
+        int count = 0;
+        try(Connection c = DBUtil.getConnection();Statement s = c.createStatement()) {
+            String sql = "select count(cid) from record where cid=" + id;
+            s.execute(sql);
+            ResultSet rs = s.getResultSet();
+            if(rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    //统计行数
+    public static int getRow(){
+        int count = 0;
+        try(Connection c = DBUtil.getConnection();Statement s = c.createStatement()) {
+            String sql = "select count(*) from category";
+            s.execute(sql);
+            ResultSet rs = s.getResultSet();
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

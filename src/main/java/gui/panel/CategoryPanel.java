@@ -1,7 +1,11 @@
 package gui.panel;
 
+import dao.CategoryDAO;
+import entity.Category;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 
 import static util.GuiUtil.showPanel;
@@ -22,11 +26,17 @@ public class CategoryPanel extends WorkingPanel{
         add();
     }
     public void add(){
-        String[] columnNames = new String[] { "分类名称","消费次数" };
-        String[][] name = new String[][] { { "交通", "0" },
-                { "住宿", "2"}, { "话费", "1" } };
-        JTable table = new JTable(name,columnNames);
-        JScrollPane sp = new JScrollPane(table);
+//        String[] columnNames = new String[] { "分类名称","消费次数" };
+//        String[][] name = new String[][] { { "交通", "0" },
+//                { "住宿", "2"}, { "话费", "1" } };
+//        JTable table = new JTable(name,columnNames);
+//        JScrollPane sp = new JScrollPane(table);
+        //按钮设置命令监听
+        newName.setActionCommand("newName");
+        edit.setActionCommand("edit");
+        del.setActionCommand("del");
+        JScrollPane sp = null;
+        display(sp);
         center.setLayout(new BorderLayout());
         center.add(sp);
         south.setLayout(new FlowLayout());
@@ -50,5 +60,21 @@ public class CategoryPanel extends WorkingPanel{
     @Override
     public void addListener() {
 
+    }
+    //显示内容数据库中的分类名称和消费次数
+    public void display(JScrollPane sp){
+        CategoryDAO dao = new CategoryDAO();
+        String[] colName = new String[]{"分类名称","消费次数"};
+        String[][] col = new String[dao.getRow()][2];
+        List<Category> list = dao.list(0,10);
+        int j = 0;
+        if(!list.isEmpty()){
+            for(Category x:list){
+                col[j][0] = x.name;
+                col[j][1] = String.valueOf(dao.getCount(x.id));
+            }
+        }
+        JTable table = new JTable(col,colName);
+        sp = new JScrollPane(table);
     }
 }
