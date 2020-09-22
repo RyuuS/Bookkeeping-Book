@@ -11,12 +11,14 @@ public class CategoryDAO implements DAO<Category> {
     @Override
     public void add(Category category) {
         String sql ="insert into category values (null,?)";
-        try(Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+        try(Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1,category.name);
-            //ps.execute();
-            ResultSet rs = ps.getResultSet();
+            ps.execute();
+            ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()){
-                category.id = rs.getInt(1);
+                //category.id = rs.getInt(1);
+                int id = rs.getInt(1);
+                category.id = id;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,7 +78,8 @@ public class CategoryDAO implements DAO<Category> {
         try(Connection c = DBUtil.getConnection();PreparedStatement ps = c.prepareStatement(sql)){
             ps.setInt(1,start);
             ps.setInt(2,count);
-            ResultSet rs = ps.getResultSet();
+            //ps.getResultSet()会报错
+            ResultSet rs = ps.executeQuery();
             /**
              * 测试区别
              * Category category1 = new Category();与Category category = null;

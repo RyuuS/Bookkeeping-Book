@@ -1,20 +1,37 @@
 package service;
 
 import dao.CategoryDAO;
-import dao.ConfigDAO;
+import dao.RecordDAO;
 import entity.Category;
+import entity.Record;
+
+import java.util.Collections;
+import java.util.List;
 
 public class CategoryService {
-    public static String name = "";
-    public static CategoryDAO dao;
-    static {
-        init(name);
-    }
-    public static void init(String name){
-        Category category = dao.getKey(name);
-        if(category == null){
-            category.setName(name);
-            dao.add(category);
+    CategoryDAO categoryDAO = new CategoryDAO();
+    RecordDAO recordDAO = new RecordDAO();
+    public List<Category> list(){
+        List<Category> cs = categoryDAO.list();
+        for(Category c:cs){
+            List<Record> rs = recordDAO.list(c.id);
+            c.recordNumber = rs.size();
         }
+        Collections.sort(cs,(c1,c2)->c2.recordNumber-c1.recordNumber);
+        return cs;
+    }
+    public void add(String name){
+        Category c = new Category();
+        c.setName(name);
+        categoryDAO.add(c);
+    }
+    public void update(int id ,String name){
+        Category c = new Category();
+        c.setId(id);
+        c.setName(name);
+        categoryDAO.update(c);
+    }
+    public void del(int id){
+        categoryDAO.delete(id);
     }
 }

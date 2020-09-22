@@ -5,6 +5,7 @@ import util.DBUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RecordDAO implements DAO<Record>{
@@ -103,5 +104,37 @@ public class RecordDAO implements DAO<Record>{
             e.printStackTrace();
         }
         return null;
+    }
+    public List<Record> list(int cid) {
+        List<Record> records = new ArrayList<Record>();
+
+        String sql = "select * from record where cid = ?";
+
+        try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql);) {
+
+            ps.setInt(1, cid);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Record record = new Record();
+                int id = rs.getInt("id");
+                int spend = rs.getInt("spend");
+
+                String comment = rs.getString("comment");
+                String date = rs.getString("date");
+
+                record.spend=spend;
+                record.cid=cid;
+                record.comment=comment;
+                record.date=date;
+                record.id = id;
+                records.add(record);
+            }
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+        return records;
     }
 }
