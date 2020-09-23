@@ -36,6 +36,29 @@ public class GuiUtil {
         }
         return false;
     }
+    //验证文本框是否为0
+    public static boolean checkZero(JTextField tf,String input){
+        if(!checkEmpty(tf, input))
+            return false;
+        String text = tf.getText().trim();
+        if(0 == Integer.parseInt(text)){
+            JOptionPane.showMessageDialog(null, input + " 不能为零");
+            tf.grabFocus();
+            return false;
+        }
+        return true;
+    }
+    public static boolean checkNumber(JTextField tf,String input){
+        String text = tf.getText().trim();
+        try{
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null,input+"必须是数字");
+            tf.grabFocus();
+            return false;
+        }
+    }
     public static void showPanel(JPanel p,double strechRate) {
         //GuiUtil.useLNF();
         JFrame f = new JFrame();
