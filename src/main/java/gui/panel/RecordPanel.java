@@ -9,6 +9,8 @@ import util.GuiUtil;
 import static util.GuiUtil.showPanel;
 import javax.swing.*;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 public class RecordPanel extends WorkingPanel{
     /**
@@ -29,7 +31,8 @@ public class RecordPanel extends WorkingPanel{
     public JTextField remarksText = new JTextField("");
     public JLabel date = new JLabel("日期");
     //日期
-    public JTextField dateText = new JTextField(String.valueOf(new Date()));
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public JTextField dateText = new JTextField(dateFormat.format(new Date()));
     //public JXDatePicker dateText = new JXDatePicker(new Date());
     public JButton b = new JButton("记一笔");
     JPanel north = new JPanel();
@@ -75,7 +78,7 @@ public class RecordPanel extends WorkingPanel{
     }
     //这个应该是获取当前
     public Category getSelectedCategory(){
-        return (Category) cbCategory.getSelectedItem();//获取下拉框的即Category对象
+        return (Category) cbCategory.getSelectedItem();//获取下拉框选中的Category对象
     }
     public void resetInput(){
         costText.setText("0");

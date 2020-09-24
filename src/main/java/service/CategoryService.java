@@ -18,6 +18,7 @@ public class CategoryService {
             c.recordNumber = rs.size();
         }
         Collections.sort(cs,(c1,c2)->c2.recordNumber-c1.recordNumber);
+        //System.out.println(cs.get(1).name);
         return cs;
     }
     public void add(String name){

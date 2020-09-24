@@ -5,14 +5,13 @@ import util.DBUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class RecordDAO implements DAO<Record>{
     @Override
     public void add(Record record) {
         String sql = "insert into record values (null,?,?,?,?)";
-        try(Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+        try(Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1,record.spend);
             ps.setInt(2,record.cid);
             ps.setString(3,record.comment);

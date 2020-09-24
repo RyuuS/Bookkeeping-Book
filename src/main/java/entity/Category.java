@@ -34,4 +34,9 @@ public class Category {
         this.name = name;
     }
 
+    //这里需要toString。因为下拉框获取的是当前对象的toString的返回值
+    @Override
+    public String toString() {
+        return name;
+    }
 }

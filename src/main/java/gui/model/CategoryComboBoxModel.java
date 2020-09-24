@@ -1,16 +1,16 @@
 package gui.model;
 
 import entity.Category;
+import service.CategoryService;
 
 import javax.swing.*;
 import javax.swing.event.ListDataListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryComboBoxModel implements ComboBoxModel {
     //在RecordPanel下，下拉框用到的是Category表
-    public List<Category> cs = new ArrayList<>();
-    Category c;
+    public List<Category> cs = new CategoryService().list();
+    public Category c;
 
     public CategoryComboBoxModel() {
         if(!cs.isEmpty())
@@ -19,6 +19,8 @@ public class CategoryComboBoxModel implements ComboBoxModel {
 
     @Override
     public void setSelectedItem(Object anItem) {
+        //选中选择的category对象
+        c = (Category) anItem;
     }
 
     @Override

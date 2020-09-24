@@ -18,21 +18,23 @@ public class RecordListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println("触发了RecordPanel事件");
         RecordPanel p = RecordPanel.instance;
-        JButton b = (JButton) e.getSource();
         if(0 == p.ccbm.cs.size()){
             JOptionPane.showMessageDialog(null,"暂无分类信息");
             MainPanel.instance.workingPanel.show(CategoryPanel.instance);
             return;
         }
+        Category c = p.getSelectedCategory();
         if(!GuiUtil.checkZero(p.costText,"花费金额")){
             return;
         }
+        System.out.println("加入成功xx");
         Record record = new Record();
-        Category c = p.getSelectedCategory();
+        //Category c = p.getSelectedCategory();
         record.setSpend(Integer.parseInt(p.costText.getText()));
+        System.out.println(c.name);
         record.setCid(c.id);
         record.setDate(p.dateText.getText());
-        record.setDate(p.remarksText.getText());
+        record.setComment(p.remarksText.getText());
         new RecordService().add(record);
     }
 }

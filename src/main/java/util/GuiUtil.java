@@ -38,10 +38,13 @@ public class GuiUtil {
     }
     //验证文本框是否为0
     public static boolean checkZero(JTextField tf,String input){
-        if(!checkEmpty(tf, input))
+        if(!checkNumber(tf, input)){
+            System.out.println("不是数字");
             return false;
+        }
         String text = tf.getText().trim();
         if(0 == Integer.parseInt(text)){
+            System.out.println("弹窗提示");
             JOptionPane.showMessageDialog(null, input + " 不能为零");
             tf.grabFocus();
             return false;
@@ -49,9 +52,12 @@ public class GuiUtil {
         return true;
     }
     public static boolean checkNumber(JTextField tf,String input){
+        if (checkEmpty(tf, input)){
+            return false;
+        }
         String text = tf.getText().trim();
         try{
-            Integer.parseInt(input);
+            Integer.parseInt(text);
             return true;
         } catch (NumberFormatException e){
             JOptionPane.showMessageDialog(null,input+"必须是数字");
