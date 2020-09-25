@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 /**
  * 消费记录表 record 有如下字段：
  * id 主键，每个表都有一个主键 类型是 int
@@ -13,7 +15,7 @@ public class Record {
     public int spend;
     public int cid;
     public String comment;
-    public String date;
+    public Date date;
 
     public int getId() {
         return id;
@@ -47,11 +49,11 @@ public class Record {
         this.comment = comment;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }

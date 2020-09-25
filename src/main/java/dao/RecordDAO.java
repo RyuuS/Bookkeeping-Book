@@ -2,7 +2,8 @@ package dao;
 
 import entity.Record;
 import util.DBUtil;
-
+import util.DateUtil;
+import java.util.Date;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class RecordDAO implements DAO<Record>{
             ps.setInt(1,record.spend);
             ps.setInt(2,record.cid);
             ps.setString(3,record.comment);
-            ps.setString(4,record.date);
+            ps.setDate(4,new java.sql.Date(record.date.getTime()));
             ps.execute();
             //修改加入新对象的ID
             ResultSet rs = ps.getGeneratedKeys();
@@ -36,7 +37,7 @@ public class RecordDAO implements DAO<Record>{
             ps.setInt(1,record.cid);
             ps.setInt(2,record.spend);
             ps.setString(3,record.comment);
-            ps.setString(4,record.date);
+            ps.setDate(4,new java.sql.Date(record.date.getTime()));
             ps.setInt(5,record.id);
             ps.execute();
         } catch (SQLException e) {
@@ -67,7 +68,7 @@ public class RecordDAO implements DAO<Record>{
                 record.cid = rs.getInt("cid");
                 record.spend = rs.getInt("spend");
                 record.comment = rs.getString("comment");
-                record.date = rs.getString("date");
+                record.date = rs.getDate("date");
                 record.id = rs.getInt("id");
             }
         } catch (SQLException e) {
@@ -96,7 +97,7 @@ public class RecordDAO implements DAO<Record>{
                 record.cid = rs.getInt("cid");
                 record.spend = rs.getInt("spend");
                 record.comment = rs.getString("comment");
-                record.date = rs.getString("date");
+                record.date = rs.getDate("date");
                 records.add(record);
             }
         } catch (SQLException e) {
@@ -121,17 +122,69 @@ public class RecordDAO implements DAO<Record>{
                 int spend = rs.getInt("spend");
 
                 String comment = rs.getString("comment");
-                String date = rs.getString("date");
+                Date date = rs.getDate("date");
 
                 record.spend=spend;
                 record.cid=cid;
                 record.comment=comment;
-                record.date=date;
+                record.date= (java.sql.Date) date;
                 record.id = id;
                 records.add(record);
             }
         } catch (SQLException e) {
 
+            e.printStackTrace();
+        }
+        return records;
+    }
+    //为消费面板添加需要用到的sql
+    public List<Record> listThisMonth(){
+        return list(DateUtil.monthBegin(),DateUtil.monthEnd());
+    }
+
+    public List<Record> list(Date start,Date end){
+        String sql = "select * from record where date >= ? and date <= ?";
+        List<Record> records = new ArrayList<>();
+        try(Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+            // ps.setDate(1, (java.sql.Date) start);
+            // ps.setDate(2, (java.sql.Date) end);
+            ps.setDate(1,DateUtil.util2sql(start));
+            ps.setDate(2,DateUtil.util2sql(end));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Record record = new Record();
+                record.id = rs.getInt("id");
+                record.spend = rs.getInt("spend");
+                record.cid = rs.getInt("cid");
+                //System.out.println(record.spend);
+                record.comment = rs.getString("comment");
+                record.date = rs.getDate("date");
+                records.add(record);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return records;
+    }
+    public List<Record> listToday(){
+        return list(DateUtil.today());
+    }
+    public List<Record> list(Date day){
+        List<Record> records = new ArrayList<>();
+        String sql = "select * from record where date = ?";
+        try(Connection c = DBUtil.getConnection();PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setDate(1, DateUtil.util2sql(day));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Record record = new Record();
+                record.id = rs.getInt("id");
+                record.spend = rs.getInt("spend");
+                record.cid = rs.getInt("cid");
+                record.comment = rs.getString("comment");
+                record.date = rs.getDate("date");
+                records.add(record);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return records;

@@ -1,5 +1,7 @@
 package gui.panel;
 
+import gui.page.SpendPage;
+import service.SpendService;
 import util.CenterPanel;
 import util.CircleProgressBar;
 import util.ColorUtil;
@@ -85,9 +87,31 @@ public class SpendPanel extends WorkingPanel{
         showPanel(SpendPanel.instance);
     }
 
+    //无监听事件，只需要更新数据
     @Override
     public void updateData() {
+        SpendPage spend = new SpendService().spendpage();
+        vMonthSpend.setText(spend.monthSpend);
+        vTodaySpend.setText(spend.todaySpend);
+        vAvgSpendPerDay.setText(spend.avgSpendPerDay);
+        vMonthAvailable.setText(spend.monthAvailable);
+        vDayAvgAvailable.setText(spend.dayAvgAvailable);
+        vMonthLeftDay.setText(spend.monthLeftDay);
 
+        //更新圆环
+        bar.setProgress(spend.usagePercentage);
+        if (spend.isOverSpend) {
+            vMonthAvailable.setForeground(ColorUtil.warningColor);
+            vMonthSpend.setForeground(ColorUtil.warningColor);
+            vTodaySpend.setForeground(ColorUtil.warningColor);
+
+        } else {
+            vMonthAvailable.setForeground(ColorUtil.grayColor);
+            vMonthSpend.setForeground(ColorUtil.blueColor);
+            vTodaySpend.setForeground(ColorUtil.blueColor);
+        }
+        bar.setForegroundColor(ColorUtil.getByPercentage(spend.usagePercentage));
+        addListener();
     }
 
     @Override
