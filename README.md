@@ -18,7 +18,3 @@
 
 **业务常见处理手法：** 
 CRUD操作，配置信息，配置信息初始化，报表生成，一对多关系，多对一关系 
-
-**源教程链接：**
-
-https://how2j.cn/k/hutubill/hutubill-tutorials/710.html
